@@ -1,34 +1,29 @@
-package csc;
-
+import java.util.concurrent.Semaphore;
 
 public class Main {
-    public static final int N = 10;  // número de funcionarios por empresa
+    public static final int nFuncionarios = 10;
+    public static Semaphore liberado = new Semaphore(1);
+    public static Semaphore aUsando = new Semaphore(1);
+    public static Semaphore bUsando = new Semaphore(1);
+    public static Semaphore multiplexA = new Semaphore(3);
+    public static Semaphore multiplexB = new Semaphore(3);
 
-    public static void main(String[] args) {
-        Manager csc = new Manager();
-        
-        // criar as threads
-        Thread [] empresaA = new Thread[N];
-        Thread [] empresaB = new Thread[N];
+    public static void main(String arg[]) throws InterruptedException{
+        int i;
+        Thread[] funcionariosA = new Thread[nFuncionarios];
+        Thread[] funcionariosB = new Thread[nFuncionarios];
 
-        for (int i = 0; i < N; i++) {
-            empresaA[i] = new Thread(new UserA("A"+i, csc));
-            empresaB[i] = new Thread(new UserB("B"+i, csc));
+        //Cria os funcionario (threads)
+        for(i=0; i<nFuncionarios; i++){
+            funcionariosA[i] = new Thread(new EmpresaA("F" + (i+1) + "[A]", aUsando, multiplexA, liberado));
+            funcionariosB[i] = new Thread(new EmpresaB("F" + (i+1) + "[B]", bUsando, multiplexB, liberado));
         }
 
-        for (int i = 0; i < N; i++) {
-            empresaA[i].start();
-            empresaB[i].start();
+        //Inicia os funcionarios (threads)
+        for (i=0; i< nFuncionarios; ++i) {
+            funcionariosA[i].start();
+            funcionariosB[i].start();
         }
-
-        try {
-            for (int i = 0; i < empresaB.length; i++) {
-                empresaA[i].join();
-                empresaB[i].join();
-            }
-        } catch (Exception e) { e.printStackTrace();}
-
-
-        System.out.println("Fim thread principal");
     }
+
 }
