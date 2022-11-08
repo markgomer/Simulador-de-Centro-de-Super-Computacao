@@ -1,3 +1,14 @@
+/*
+ * Trabalho 3 - Centro de Supercomputação
+ * 
+ * Integrantes:
+ *  Eduardo Klein Nakatani
+ *  Henrique Levandoski Richa
+ *  Marco Aurélio Silva de Souza Júnior
+ *  Rafael Bauer Sampaio
+ *  Rafael Vitagliano Tannenbaum Nuñez
+ */
+
 import java.util.concurrent.Semaphore;
 
 public class Main {
