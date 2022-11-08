@@ -3,12 +3,13 @@ import java.util.Random;
 
 
 public class EmpresaB implements Runnable {
+    public static int contadorB = 0;
+    
     String id;
     Semaphore multiplexB, bUsando, liberado;
     Random rand = new Random();
     int max = 10_000;
     int min = 5_000;
-    public static int contadorB = 0;
 
     EmpresaB(String id, Semaphore bUsando, Semaphore multiplexB, Semaphore liberado) {
         this.id = id;
