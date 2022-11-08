@@ -23,7 +23,6 @@ public class EmpresaB implements Runnable {
      */
     private void up() throws InterruptedException {
         multiplexB.release();
-    
         unlock();
     }
 
@@ -32,11 +31,8 @@ public class EmpresaB implements Runnable {
      * Ask access to the computer
      */
     private void down() throws InterruptedException {
-        Thread.sleep(rand.nextInt((4000) + 1) + 1000); //tempo aleatorio entre 1 e 4s
-        System.out.println(id + " tentando acesso");
-        
+        System.out.println(id + " tentando acesso");        
         lock();
-        
         multiplexB.acquire();
     }
 
@@ -81,6 +77,7 @@ public class EmpresaB implements Runnable {
     @Override
     public void run() {
         try {
+            Thread.sleep(rand.nextInt((4000) + 1) + 1000); //tempo aleatorio entre 1 e 4s
             down();
             simulateUse();
             up();
